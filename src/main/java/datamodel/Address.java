@@ -1,5 +1,6 @@
 package datamodel;
 
+import java.util.Objects;
 import java.util.zip.DataFormatException;
 
 /**
@@ -70,5 +71,25 @@ public class Address {
 
     public void setZipCode(String zipCode) throws DataFormatException {
         this.zipCode = VALIDATOR.validateZipCode(zipCode);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof Address) {
+            Address otherAddress = (Address) obj;
+            return buildingNumber == otherAddress.buildingNumber
+                    && streetName.equals(otherAddress.streetName)
+                    && cityName.equals(otherAddress.cityName)
+                    && zipCode.equals(otherAddress.zipCode);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(buildingNumber, streetName, cityName, zipCode);
     }
 }
